@@ -30,6 +30,7 @@ public class FileManager {
         return instance;
     }
     // User authentication method that uses 'username' and 'password'
+    // = Verify user credentials against information stored in text files
     public User authenticateUser(String username, String password){
         // I/O Exception handling = try - catch
         // Chain a BufferedWriter on to a new FileWriter with file name(in this case 'userRecordFilePath')
@@ -52,6 +53,34 @@ public class FileManager {
             e.printStackTrace();
         }
         return null;
+    }
+    // Balance Inquiry
+    public double getBalance(String username){
+        // I/O Exception handling = try - catch
+        // Chain a BufferedWriter on to a new FileWriter with file name(in this case 'userRecordFilePath')
+        try(BufferedReader reader = new BufferedReader(new FileReader(userRecordFilePath))){
+            // Make a String variable to hold each line as the line is read
+            String line;
+            while((line = reader.readLine()) != null){
+                String[] userData = line.split(","); // an array of String(userData) that is split by ','.
+                /*
+                 * If user data's length is 3 = if there are three data for the user in the file split by ','
+                 * If index 0 of user data is username
+                 * -> Get the account balance of the username
+                 */
+                if(userData.length == 3 && userData[0].equals(username)){
+                    return Double.parseDouble(username);
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return -1; // user not found
+    }
+
+    // Update the user's balance in the file when the user deposits money into their account using username and new account balance
+    public void updateBalance(String username, double newBalance){
+
     }
 
 
