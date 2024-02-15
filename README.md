@@ -114,3 +114,5 @@ This assignment is designed to challenge your Java programming skills and encour
 - https://www.digitalocean.com/community/tutorials/java-singleton-design-pattern-best-practices-examples (Singleton Pattern)
 
 - Head First Java 3rd Edition(serialization and file I/O)
+- https://en.wikipedia.org/wiki/Factory_method_pattern (Factory Method Pattern: Wikipedia)
+- https://www.baeldung.com/java-factory-pattern (Factory Method Pattern)
