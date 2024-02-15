@@ -113,3 +113,4 @@ This assignment is designed to challenge your Java programming skills and encour
 
 - https://www.digitalocean.com/community/tutorials/java-singleton-design-pattern-best-practices-examples (Singleton Pattern)
 
+- Head First Java 3rd Edition(serialization and file I/O)
