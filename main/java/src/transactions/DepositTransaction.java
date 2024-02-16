@@ -16,17 +16,18 @@ public class DepositTransaction implements Transaction{
 
     @Override
     public void execute(){
-        // code for deposit transaction
-        // Validate the deposit amount(ensure it is not negative)
-        if(depositAmount <= 0){
-            System.out.println("Deposit amount is negative. Please enter the positive deposit amount.");
-            return;
-        }
-        // Update the user's account balance
-        double newBalance = authenticatedUser.getAccountBalance() + depositAmount;
-        authenticatedUser.setAccountBalance(newBalance);
+            // code for deposit transaction
+            // Validate the deposit amount(ensure it is not negative)
+            if (depositAmount <= 0) {
+                System.out.println("Deposit amount is negative. Please enter the positive deposit amount.");
+                return;
+            }
+            // Update the user's account balance
+            double newBalance = authenticatedUser.getAccountBalance() + depositAmount;
+            authenticatedUser.setAccountBalance(newBalance);
 
-        // Display a conformation message
-        System.out.println("Deposit successful. Your new balance is: " + newBalance);
+            // Display a conformation message
+            System.out.println("Deposit successful. Your new balance is: " + newBalance);
+
     }
 }

@@ -47,9 +47,19 @@ public class Main {
                             System.out.println("Enter the amount you want to deposit");
                             String depositAmountInput = input.nextLine();
                             double depositAmount = Double.parseDouble(depositAmountInput);
-                            System.out.println("Enter 'deposit' to deposit the money");
-                            String userInputToDepositMoney = input.nextLine();
-                            Transaction depositTransaction = transactionFactory.createTransaction("deposit",authenticatedUser,depositAmount);
+
+                            String userInputToDepositMoney;
+                            Transaction depositTransaction = null;
+                            do {
+                                System.out.println("Enter 'deposit' to deposit the money");
+                                userInputToDepositMoney = input.nextLine();
+                                try {
+                                    depositTransaction = transactionFactory.createTransaction(userInputToDepositMoney, authenticatedUser, depositAmount);
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            }while(depositTransaction == null);
+
                             depositTransaction.execute();
 
                             // Update the user account balance in the user_record.txt file
