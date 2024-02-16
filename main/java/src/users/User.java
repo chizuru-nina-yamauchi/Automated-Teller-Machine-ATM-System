@@ -1,3 +1,5 @@
+package users;
+
 public class User {
     // Attributes
     private String accountUsername;
@@ -43,7 +45,7 @@ public class User {
     // toString
     @Override
     public String toString() {
-        return "User{" +
+        return "users.User{" +
                 "accountUsername='" + accountUsername + '\'' +
                 ", accountPassword='" + accountPassword + '\'' +
                 ", accountBalance=" + accountBalance +

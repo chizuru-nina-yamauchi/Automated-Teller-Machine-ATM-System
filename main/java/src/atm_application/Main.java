@@ -1,10 +1,19 @@
+package atm_application;
+
+import factories.TransactionFactory;
+import file.FileManager;
+import transactions.Transaction;
+
 import java.util.Scanner;
 
-// Main class = ATM class
+import users.User;
+
+// atm_application.Main class = ATM class
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         FileManager fileManager = FileManager.getInstance(); // singleton pattern
+        TransactionFactory transactionFactory = new TransactionFactory();
 
         System.out.println("Enter the username to login: ");
         String username = input.nextLine();
@@ -32,9 +41,21 @@ public class Main {
 
                     switch (option) {
                         case 1:
-                            System.out.println("Current balance: $ " + authenticatedUser.getAccountBalance());
+                            System.out.println("Current balance: $ " + fileManager.getBalance(username));
                             break;
                         case 2:
+                            System.out.println("Enter the amount you want to deposit");
+                            String depositAmountInput = input.nextLine();
+                            double depositAmount = Double.parseDouble(depositAmountInput);
+                            System.out.println("Enter 'deposit' to deposit the money");
+                            String userInputToDepositMoney = input.nextLine();
+                            Transaction depositTransaction = transactionFactory.createTransaction("deposit",authenticatedUser,depositAmount);
+                            depositTransaction.execute();
+
+                            // Update the user account balance in the user_record.txt file
+                            double newBalance = authenticatedUser.getAccountBalance() + depositAmount;
+                            fileManager.updateBalance(username, newBalance);
+
                             break;
                         case 3:
                             break;

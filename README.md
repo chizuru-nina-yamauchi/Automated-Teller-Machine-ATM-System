@@ -20,13 +20,13 @@ This project is an exciting opportunity to delve into the world of Java programm
 
 - **Factory Method Pattern:** Use this pattern for creating objects without specifying the exact class of object that will be created. This is particularly useful for creating different types of transactions (e.g., deposit, withdrawal, transfer) based on user input.
 
-  **Hint:** Define a `TransactionFactory` class with a method that returns different `Transaction.Transaction` objects based on the transaction type.
+  **Hint:** Define a `factories` class with a method that returns different `transactions.transactions` objects based on the transactions type.
 
 - **Singleton Pattern:** Although we are not managing database connections, the Singleton pattern is still valuable for managing access to the file that stores user records. This ensures that only one instance of the file manager exists throughout the application, preventing concurrent file access issues.
 
-  **Hint:** Implement a `FileManager` class as a Singleton, which will handle all read and write operations to the user records file.
+  **Hint:** Implement a `file.FileManager` class as a Singleton, which will handle all read and write operations to the user records file.
 
-### User Authentication
+### users.User Authentication
 
 **Objective:** Verify user credentials against information stored in text files.
 
@@ -80,7 +80,7 @@ This project is an exciting opportunity to delve into the world of Java programm
 
 ### Additional Advanced Features
 
-Continue with the advanced features as previously outlined, including Transaction.Transaction History, Scheduled Transactions, Account Alerts, Multi-Currency Support, User Profile Management, and Security Enhancements.
+Continue with the advanced features as previously outlined, including transactions.transactions History, Scheduled Transactions, Account Alerts, Multi-Currency Support, users.User Profile Management, and Security Enhancements.
 
 ### JUnit Testing
 

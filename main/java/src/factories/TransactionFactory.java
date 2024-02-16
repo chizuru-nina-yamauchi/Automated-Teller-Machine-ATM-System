@@ -1,17 +1,18 @@
-package TransactionFactory;
+package factories;
 
-import Transaction.DepositTransaction;
-import Transaction.Transaction;
-import Transaction.TransferTransaction;
-import Transaction.WithdrawalTransaction;
+import transactions.DepositTransaction;
+import transactions.Transaction;
+import transactions.TransferTransaction;
+import transactions.WithdrawalTransaction;
+import users.User;
 
 // Following the Factory Method Pattern
 public class TransactionFactory {
     // Method that returns different Transaction objects based on the transaction type
-    public Transaction createTransaction(String transactionType){
+    public Transaction createTransaction(String transactionType, User loggedinUser, double transactionAmount){
         switch(transactionType.toLowerCase()){ // Use 'toLowerCase()' to avoid the error because of Capital or lower case issues
             case "deposit":
-                return new DepositTransaction();
+                return new DepositTransaction(loggedinUser, transactionAmount);
                 /* If transactionType is "deposit",
                  * it creates a new instance of DepositTransaction using return new DepositTransaction();.
                  * The created transaction object is then returned to the calling code

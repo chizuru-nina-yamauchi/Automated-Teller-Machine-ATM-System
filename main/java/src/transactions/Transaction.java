@@ -1,4 +1,4 @@
-package Transaction;
+package transactions;
 
 public interface Transaction {
     void execute();

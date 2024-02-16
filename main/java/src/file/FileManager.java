@@ -1,9 +1,13 @@
+package file;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import users.User;
 
 public class FileManager {
     // Singleton Pattern File Manager
@@ -32,7 +36,7 @@ public class FileManager {
         }
         return instance;
     }
-    // User authentication method that uses 'username' and 'password'
+    // users.User authentication method that uses 'username' and 'password'
     // = Verify user credentials against information stored in text files
     public User authenticateUser(String username, String password){
         // I/O Exception handling = try with resources - catch
@@ -72,8 +76,9 @@ public class FileManager {
                  * -> Get the account balance of the username
                  */
                 if(userData.length == 3 && userData[0].equals(username)){
-                    return Double.parseDouble(username);
+                    return  Double.parseDouble(userData[2]);
                 }
+
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -88,6 +93,7 @@ public class FileManager {
         try{
             // File object represents a file at a particular path(but doesn't represent the actual content of the file
             File inputFile = new File(userRecordFilePath);
+            // Using a temporary file during the update process to ensure data consistency.
             File temporaryFile = new File("temporary.txt");
 
             // Chain a BufferedWriter on to a new FileWriter(+ FileReader) with file name(in this case 'inputFile' + 'temporaryFile')

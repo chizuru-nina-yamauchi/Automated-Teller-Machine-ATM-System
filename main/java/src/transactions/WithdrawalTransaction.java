@@ -1,4 +1,4 @@
-package Transaction;
+package transactions;
 
 public class WithdrawalTransaction implements Transaction{
     @Override

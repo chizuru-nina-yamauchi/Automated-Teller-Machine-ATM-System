@@ -1,4 +1,4 @@
-package Transaction;
+package transactions;
 
 public class TransferTransaction implements Transaction{
     @Override
