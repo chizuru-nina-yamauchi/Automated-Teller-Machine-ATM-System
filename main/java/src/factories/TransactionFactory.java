@@ -30,6 +30,7 @@ public class TransactionFactory {
              * The created transaction object is then returned to the calling code
              */
             default:
+                // Throw the exception handling for user input error
                 throw new IllegalArgumentException("Invalid transaction type: " + transactionType);
         }
 

@@ -63,11 +63,31 @@ public class Main {
                             depositTransaction.execute();
 
                             // Update the user account balance in the user_record.txt file
-                            double newBalance = authenticatedUser.getAccountBalance() + depositAmount;
-                            fileManager.updateBalance(username, newBalance);
+                            fileManager.updateBalance(username, authenticatedUser.getAccountBalance());
 
                             break;
                         case 3:
+                            System.out.println("Enter the amount you want to withdraw");
+                            String withdrawalAmountInput = input.nextLine();
+                            double withdrawalAmount = Double.parseDouble(withdrawalAmountInput);
+
+                            String userInputToWithdrawMoney;
+                            Transaction withdrawalTransaction = null;
+                            do {
+                                System.out.println("Enter 'withdrawal' to withdraw the money");
+                                userInputToWithdrawMoney = input.nextLine();
+                                try {
+                                    withdrawalTransaction = transactionFactory.createTransaction(userInputToWithdrawMoney, authenticatedUser, withdrawalAmount);
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            }while(withdrawalTransaction == null);
+
+                            withdrawalTransaction.execute();
+
+                            // Update the user account balance in the user_record.txt file
+                            fileManager.updateBalance(username, authenticatedUser.getAccountBalance());
+
                             break;
                         case 4:
                             break;

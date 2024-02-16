@@ -25,6 +25,7 @@ public class WithdrawalTransaction implements Transaction{
         double newBalance = authenticatedUser.getAccountBalance() - withdrawalAmount;
         authenticatedUser.setAccountBalance(newBalance);
 
+
         // Display a conformation message
         System.out.println("Withdrawal successful. Your new balance is: " + newBalance);
     }
