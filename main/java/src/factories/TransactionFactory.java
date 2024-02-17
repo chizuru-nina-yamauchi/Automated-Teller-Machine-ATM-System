@@ -23,16 +23,23 @@ public class TransactionFactory {
              * it creates a new instance of WithdrawalTransaction using return new WithdrawalTransaction();.
              * The created transaction object is then returned to the calling code
              */
-            case "transfer":
-                return new TransferTransaction();
-            /* If transactionType is "transfer",
-             * it creates a new instance of TransferTransaction using return new TransferTransaction();.
-             * The created transaction object is then returned to the calling code
-             */
             default:
                 // Throw the exception handling for user input error
                 throw new IllegalArgumentException("Invalid transaction type: " + transactionType);
         }
 
     }
+    // Overloaded method for Transfer transaction with a recipient(extra parameter, arguments will be needed)
+    public Transaction createTransaction(String transactionType, User authenticatedUser, User recipientUser, double transactionAmount){
+        /* If transactionType is "transfer",
+         * it creates a new instance of TransferTransaction using return new TransferTransaction();.
+         * The created transaction object is then returned to the calling code
+         */
+        if("transfer".equals(transactionType.toLowerCase())){ // Use 'toLowerCase()' to avoid the error because of Capital or lower case issues
+            return new TransferTransaction(authenticatedUser, recipientUser, transactionAmount);
+        }else {
+            throw new IllegalArgumentException("Invalid transaction type: " + transactionType);
+        }
+    }
+
 }
