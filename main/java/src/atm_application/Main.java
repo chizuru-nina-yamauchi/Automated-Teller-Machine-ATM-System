@@ -18,23 +18,26 @@ public class Main {
         User authenticatedUser = null;
         String username = null;
         String password = null;
-        while(authenticatedUser == null){
 
+        int maxLoginAttempts = 3;
+        int loginAttempts = 0;
+        while(authenticatedUser == null && loginAttempts < maxLoginAttempts){
 
-        System.out.println("Enter the username to login: ");
-        username = input.nextLine();
+            System.out.println("Enter the username to login: ");
+            username = input.nextLine();
 
-        System.out.println("Enter the password to login: ");
-        password = input.nextLine();
+            System.out.println("Enter the password to login: ");
+            password = input.nextLine();
 
-        authenticatedUser = fileManager.authenticateUser(username, password);
-        if (authenticatedUser != null) {
-            System.out.println("Authentication succeeded. Welcome " + username);
-        }else {
-            System.out.println("Authentication failed. Invalid username or password. Try again to log in.");
+            authenticatedUser = fileManager.authenticateUser(username, password);
+            if (authenticatedUser != null) {
+                System.out.println("Authentication succeeded. Welcome " + username);
+            }else {
+                loginAttempts++;
+                System.out.println("Authentication failed. Invalid username or password. \nAttempt left: " + (maxLoginAttempts - loginAttempts));
+            }
         }
-
-        }
+        if(authenticatedUser != null){
             while (true) {
                 System.out.println("----------------------------");
                 System.out.println("Choose your option: ");
@@ -69,7 +72,7 @@ public class Main {
                                 } catch (IllegalArgumentException e) {
                                     System.out.println(e.getMessage());
                                 }
-                            }while(depositTransaction == null);
+                            } while (depositTransaction == null);
 
                             depositTransaction.execute();
 
@@ -92,7 +95,7 @@ public class Main {
                                 } catch (IllegalArgumentException e) {
                                     System.out.println(e.getMessage());
                                 }
-                            }while(withdrawalTransaction == null);
+                            } while (withdrawalTransaction == null);
 
                             withdrawalTransaction.execute();
 
@@ -104,41 +107,41 @@ public class Main {
                             int maxAttempts = 3;
                             int attemptCount = 0;
 
-                            while(true){
-                            System.out.println("Enter the recipient's username you want to transfer money to: ");
-                            String recipientUsername = input.nextLine();
-                            User recipientUser = fileManager.getUserByUsername(recipientUsername);
-                            if (recipientUser != null) {
-                                System.out.println("Enter the amount you want to transfer");
-                                String transferAmountInput = input.nextLine();
-                                double transferAmount = Double.parseDouble(transferAmountInput);
+                            while (true) {
+                                System.out.println("Enter the recipient's username you want to transfer money to: ");
+                                String recipientUsername = input.nextLine();
+                                User recipientUser = fileManager.getUserByUsername(recipientUsername);
+                                if (recipientUser != null) {
+                                    System.out.println("Enter the amount you want to transfer");
+                                    String transferAmountInput = input.nextLine();
+                                    double transferAmount = Double.parseDouble(transferAmountInput);
 
-                                String userInputToTransferMoney;
-                                Transaction transferTransaction = null;
-                                do {
-                                    System.out.println("Enter 'transfer' to transfer the money");
-                                    userInputToTransferMoney = input.nextLine();
-                                    try {
-                                        transferTransaction = transactionFactory.createTransaction(userInputToTransferMoney, authenticatedUser, recipientUser, transferAmount);
-                                    } catch (IllegalArgumentException e) {
-                                        System.out.println(e.getMessage());
-                                    }
-                                } while (transferTransaction == null);
+                                    String userInputToTransferMoney;
+                                    Transaction transferTransaction = null;
+                                    do {
+                                        System.out.println("Enter 'transfer' to transfer the money");
+                                        userInputToTransferMoney = input.nextLine();
+                                        try {
+                                            transferTransaction = transactionFactory.createTransaction(userInputToTransferMoney, authenticatedUser, recipientUser, transferAmount);
+                                        } catch (IllegalArgumentException e) {
+                                            System.out.println(e.getMessage());
+                                        }
+                                    } while (transferTransaction == null);
 
-                                transferTransaction.execute();
+                                    transferTransaction.execute();
 
-                                // Update the user account balance in the user_record.txt file for both authenticatedUser and recipientUser
-                                fileManager.updateBalance(username, authenticatedUser.getAccountBalance());
-                                fileManager.updateBalance(recipientUsername, recipientUser.getAccountBalance());
-                                break; // Exit the loop and return to the main menu
-                            } else {
-                                System.out.println("Recipient not found. Try again");
-                                attemptCount++;
-                                if(attemptCount >= maxAttempts){
-                                    System.out.println("Maximum attempts reached. Returning to the main menu.");
+                                    // Update the user account balance in the user_record.txt file for both authenticatedUser and recipientUser
+                                    fileManager.updateBalance(username, authenticatedUser.getAccountBalance());
+                                    fileManager.updateBalance(recipientUsername, recipientUser.getAccountBalance());
                                     break; // Exit the loop and return to the main menu
+                                } else {
+                                    System.out.println("Recipient not found. Try again");
+                                    attemptCount++;
+                                    if (attemptCount >= maxAttempts) {
+                                        System.out.println("Maximum attempts reached. Returning to the main menu.");
+                                        break; // Exit the loop and return to the main menu
+                                    }
                                 }
-                            }
                             }
                         case 5:
                             break;
@@ -155,8 +158,9 @@ public class Main {
                     System.out.println("Please enter the valid 'NUMBER'.");
                 }
             }
-
-
+            }else {
+            System.out.println("Maximum login attempts reached. Exiting the system.");
+        }
 
         }
 
