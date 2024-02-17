@@ -15,15 +15,26 @@ public class Main {
         FileManager fileManager = FileManager.getInstance(); // singleton pattern
         TransactionFactory transactionFactory = new TransactionFactory();
 
+        User authenticatedUser = null;
+        String username = null;
+        String password = null;
+        while(authenticatedUser == null){
+
+
         System.out.println("Enter the username to login: ");
-        String username = input.nextLine();
+        username = input.nextLine();
 
         System.out.println("Enter the password to login: ");
-        String password = input.nextLine();
+        password = input.nextLine();
 
-        User authenticatedUser = fileManager.authenticateUser(username, password);
+        authenticatedUser = fileManager.authenticateUser(username, password);
         if (authenticatedUser != null) {
             System.out.println("Authentication succeeded. Welcome " + username);
+        }else {
+            System.out.println("Authentication failed. Invalid username or password. Try again to log in.");
+        }
+
+        }
             while (true) {
                 System.out.println("----------------------------");
                 System.out.println("Choose your option: ");
@@ -90,7 +101,45 @@ public class Main {
 
                             break;
                         case 4:
-                            break;
+                            int maxAttempts = 3;
+                            int attemptCount = 0;
+
+                            while(true){
+                            System.out.println("Enter the recipient's username you want to transfer money to: ");
+                            String recipientUsername = input.nextLine();
+                            User recipientUser = fileManager.getUserByUsername(recipientUsername);
+                            if (recipientUser != null) {
+                                System.out.println("Enter the amount you want to transfer");
+                                String transferAmountInput = input.nextLine();
+                                double transferAmount = Double.parseDouble(transferAmountInput);
+
+                                String userInputToTransferMoney;
+                                Transaction transferTransaction = null;
+                                do {
+                                    System.out.println("Enter 'transfer' to transfer the money");
+                                    userInputToTransferMoney = input.nextLine();
+                                    try {
+                                        transferTransaction = transactionFactory.createTransaction(userInputToTransferMoney, authenticatedUser, recipientUser, transferAmount);
+                                    } catch (IllegalArgumentException e) {
+                                        System.out.println(e.getMessage());
+                                    }
+                                } while (transferTransaction == null);
+
+                                transferTransaction.execute();
+
+                                // Update the user account balance in the user_record.txt file for both authenticatedUser and recipientUser
+                                fileManager.updateBalance(username, authenticatedUser.getAccountBalance());
+                                fileManager.updateBalance(recipientUsername, recipientUser.getAccountBalance());
+                                break; // Exit the loop and return to the main menu
+                            } else {
+                                System.out.println("Recipient not found. Try again");
+                                attemptCount++;
+                                if(attemptCount >= maxAttempts){
+                                    System.out.println("Maximum attempts reached. Returning to the main menu.");
+                                    break; // Exit the loop and return to the main menu
+                                }
+                            }
+                            }
                         case 5:
                             break;
                         case 6:
@@ -108,9 +157,7 @@ public class Main {
             }
 
 
-            }else{
-                System.out.println("Authentication failed. Invalid username or password. Try again to log in.");
-            }
+
         }
 
     }

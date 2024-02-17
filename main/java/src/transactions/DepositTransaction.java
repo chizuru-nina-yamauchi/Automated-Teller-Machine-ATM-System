@@ -5,8 +5,8 @@ import users.User;
 
 public class DepositTransaction implements Transaction{
     // Attributes
-    private User authenticatedUser;
-    private double depositAmount;
+    private final User authenticatedUser;
+    private final double depositAmount;
 
     // Constructor to initialize the authenticated user and deposit amount
     public DepositTransaction(User authenticatedUser, double depositAmount){
@@ -19,7 +19,7 @@ public class DepositTransaction implements Transaction{
             // code for deposit transaction
             // Validate the deposit amount(ensure it is not negative)
             if (depositAmount <= 0) {
-                System.out.println("Deposit amount is negative. Please enter the positive deposit amount.");
+                System.out.println("Deposit amount is invalid. Please enter the positive deposit amount.");
                 return;
             }
             // Update the user's account balance

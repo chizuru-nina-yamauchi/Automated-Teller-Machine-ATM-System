@@ -4,8 +4,8 @@ import users.User;
 
 public class WithdrawalTransaction implements Transaction{
     // Attributes
-    private User authenticatedUser;
-    private double withdrawalAmount;
+    private final User authenticatedUser;
+    private final double withdrawalAmount;
 
     // Constructor to initialize the authenticated user and deposit amount
     public WithdrawalTransaction(User authenticatedUser, double withdrawalAmount){
@@ -18,7 +18,7 @@ public class WithdrawalTransaction implements Transaction{
         // code for withdrawal transaction
         // Validate the withdrawal amount(ensure it is not negative)
         if(withdrawalAmount <= 0){
-            System.out.println("Withdrawal amount is negative. Please enter the positive withdrawal amount.");
+            System.out.println("Withdrawal amount is invalid. Please enter the positive withdrawal amount.");
             return;
         }
         // Update the user's account balance

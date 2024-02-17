@@ -126,5 +126,30 @@ public class FileManager {
 
     }
 
+    // Get user by username
+    public User getUserByUsername(String username){
+        // I/O Exception handling = try with resources -catch
+        // Chain a BufferedReader on to a new FileReader with file name(in this case 'userRecordFilePath')
+        try(BufferedReader reader = new BufferedReader(new FileReader(userRecordFilePath))){
+            // Make a String variable to hold each line as the line is read
+            String line;
+            while((line= reader.readLine()) != null){
+                String[] userData = line.split(","); // an array of String(userData) that is split by ','.
+                /*
+                 * If user data's length is 3 = if there are three data for the user in the file split by ','
+                 * If index 0 of user data is username
+                 * -> Create the new user object with username, password, account balance
+                 */
+                if(userData.length == 3 && userData[0].equals(username)){
+                    return new User(username, userData[1], Double.parseDouble(userData[2]));
+                }
+
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return null; // User not found
+    }
+
 }
 

@@ -1,2 +1,2 @@
-portgasDAce,iWillProtectMyBrother,3003000.0
-monkeyDLuffy,iWillBecomeAKingOfPirate,1000000
+portgasDAce,iWillProtectMyBrother,2999000.0
+monkeyDLuffy,iWillBecomeAKingOfPirate,1001000.0
