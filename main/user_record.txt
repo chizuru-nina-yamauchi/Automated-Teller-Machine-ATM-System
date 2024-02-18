@@ -1,2 +1,3 @@
 portgasDAce,iWillProtectMyBrother,3000000.0
 monkeyDLuffy,iWillBecomeAKingOfPirate,1011000.0
+testUser,testPassword,100000.0
