@@ -78,7 +78,6 @@ public class FileManager {
                 if(userData.length == 3 && userData[0].equals(username)){
                     return  Double.parseDouble(userData[2]);
                 }
-
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -96,7 +95,7 @@ public class FileManager {
             // Using a temporary file during the update process to ensure data consistency.
             File temporaryFile = new File("temporary.txt");
 
-            // Chain a BufferedWriter on to a new FileWriter(+ FileReader) with file name(in this case 'inputFile' + 'temporaryFile')
+            // Chain a BufferedWriter(BufferedReader) on to a new FileWriter(+ FileReader) with file name(in this case 'inputFile' + 'temporaryFile')
             try(BufferedReader reader = new BufferedReader(new FileReader(inputFile));
                 BufferedWriter writer = new BufferedWriter(new FileWriter(temporaryFile))){
                 // Make a String variable to hold each line as the line is read
@@ -118,12 +117,9 @@ public class FileManager {
             }
 
             temporaryFile.renameTo(inputFile); // in the end, rename the file to inputFile: means 'file name = userRecordFile'
-
-
         }catch(IOException e){
             e.printStackTrace();
         }
-
     }
 
     // Get user by username
@@ -143,12 +139,46 @@ public class FileManager {
                 if(userData.length == 3 && userData[0].equals(username)){
                     return new User(username, userData[1], Double.parseDouble(userData[2]));
                 }
-
             }
         }catch (IOException e){
             e.printStackTrace();
         }
         return null; // User not found
+    }
+
+    // Update the user's password in the file when the user deposits money into their account using username and new account balance
+    public void updatePassword(String username, String newPassword) {
+        // I/O Exception handling = try - catch
+        try {
+            // File object represents a file at a particular path(but doesn't represent the actual content of the file
+            File inputFileToUpdate = new File(userRecordFilePath);
+            // Using a temporary file during the update process to ensure data consistency.
+            File temporaryFileToUpdate = new File("temporary.txt");
+
+            // Chain a BufferedWriter(BufferedReader) on to a new FileWriter(+ FileReader) with file name(in this case 'inputFile' + 'temporaryFile')
+            try (BufferedReader reader = new BufferedReader(new FileReader(inputFileToUpdate));
+                 BufferedWriter writer = new BufferedWriter(new FileWriter(temporaryFileToUpdate))) {
+                // Make a String variable to hold each line as the line is read
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] userData = line.split(","); // an array of String(userData) that is split by ','.
+                    /*
+                     * If user data's length is 3 = if there are three data for the user in the file split by ','
+                     * If index 0 of user data is username
+                     * -> Write the username, index 1 of user data(password) and new balance in the file
+                     *    and then go to the new line
+                     */
+                    if (userData.length == 3 && userData[0].equals(username)) {
+                        writer.write(username + "," + newPassword + "," + userData[2] + "\n");
+                    } else {
+                        writer.write(line + "\n");
+                    }
+                }
+            }
+            temporaryFileToUpdate.renameTo(inputFileToUpdate); // in the end, rename the file to inputFile: means 'file name = userRecordFile'
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

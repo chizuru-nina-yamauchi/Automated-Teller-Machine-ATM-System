@@ -19,6 +19,7 @@ public class Main {
         String username = null;
         String password = null;
 
+        // If the user fails to log-in 3 times, finish the system
         int maxLoginAttempts = 3;
         int loginAttempts = 0;
         while(authenticatedUser == null && loginAttempts < maxLoginAttempts){
@@ -135,7 +136,7 @@ public class Main {
                                     fileManager.updateBalance(recipientUsername, recipientUser.getAccountBalance());
                                     break; // Exit the loop and return to the main menu
                                 } else {
-                                    System.out.println("Recipient not found. Try again");
+                                    System.out.println("Recipient not found. \nAttempt left: " + (maxAttempts - attemptCount -1));
                                     attemptCount++;
                                     if (attemptCount >= maxAttempts) {
                                         System.out.println("Maximum attempts reached. Returning to the main menu.");
@@ -143,14 +144,40 @@ public class Main {
                                     }
                                 }
                             }
+                            break;
                         case 5:
+                            String newPassword = null;
+                            String newPasswordToConfirm;
+                            // If the user fails to confirm 3 times, returning to the main menu
+                            int maxAttemptsToChangePIN = 3;
+                            int attemptsToChangePIN = 0;
+                            while(newPassword == null && attemptsToChangePIN < maxAttemptsToChangePIN) {
+                                System.out.println("Enter the new password");
+                                newPassword = input.nextLine();
+                                System.out.println("Enter the new password again to confirm");
+                                newPasswordToConfirm = input.nextLine();
+                                if(newPassword.equals(newPasswordToConfirm)) {
+                                    fileManager.updatePassword(username, newPassword);
+                                    authenticatedUser.setAccountPassword(newPassword);
+                                    System.out.println("Password update successful. New password: " + authenticatedUser.getAccountPassword());
+                                    break;
+                                }else {
+                                    attemptsToChangePIN++;
+                                    System.out.println("Passwords don't match. \nAttempt left: " + (maxAttemptsToChangePIN - attemptsToChangePIN));
+                                    if(attemptsToChangePIN>=maxAttemptsToChangePIN){
+                                        System.out.println("Maximum attempts reached. Returning to the main menu. Try later.");
+                                    }else {
+                                        // Reset newPassword to null for the next iteration: otherwise it returns to the main menu with 'Attempt left: 2'
+                                        newPassword = null;
+                                    }
+                                }
+                            }
                             break;
                         case 6:
                             System.exit(0);
                             System.out.println("Exiting the system");
                         default:
                             System.out.println("Invalid number. Please choose from 1 to 6.");
-
                     }
 
 
