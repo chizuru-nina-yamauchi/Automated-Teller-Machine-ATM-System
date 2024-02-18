@@ -1,4 +1,3 @@
-# Automated-Teller-Machine-ATM--System
 My assignment for ATM System with Factory Method Pattern, Singleton Pattern
 
 ---
@@ -108,6 +107,58 @@ This assignment is designed to challenge your Java programming skills and encour
 ***Good luck!*** :wink:
 
 ---
+
+## My Result
+
+- JUnit test passed
+
+![testPic](./main/resources/testResult1.png)
+
+- Using ATM
+
+![pic1](./main/resources/pic1.png)
+
+![pic2](./main/resources/pic2.png)
+
+![pic3](./main/resources/pic3.png)
+
+![pic4](./main/resources/pic4.png)
+
+- Error handling
+-- Login Fail
+
+![loginFailPic](./main/resources/loginFailPic.png)
+
+- Error handling
+-- Deposit Fail
+(Deposit amount has to be positive amount)
+
+![depositFail](./main/resources/depositFailPic.png)
+
+- Error handling
+-- Deposit spell mistake(*It doesn't matter if it is with Capital or lower case)
+
+![depositSpellMistake](./main/resources/depositMisSpellPic.png)
+
+- Error handling
+-- Withdrawal spell mistake
+
+![withdrawalSpellMistake](./main/resources/withdrawalMisSpellPic.png)
+
+- Error handling
+-- Transfer Fail(recipient not found -> return to the main menu)
+
+![recipientNotFound](./main/resources/recipientUsernameError.png)
+
+- Error handling
+-- Change PIN Fail(Passwords don't match 3 times -> return to the main menu)
+
+![passwordNotMatch](./main/resources/passwordNotMatch.png)
+
+
+
+
+
 
 ## Resources
 
